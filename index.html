@@ -32,7 +32,7 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Montserrat',sans-serif;background:var(--cr);color:#1A0A2E;overflow-x:hidden;font-size:17px;padding-bottom:64px;line-height:1.75}
+body{font-family:'Montserrat',sans-serif;background:var(--cr);color:#1A0A2E;overflow-x:hidden;font-size:17px;padding-bottom:24px;line-height:1.75}
 .wrap{width:100%;max-width:640px;margin:0 auto;padding:0 24px}
 a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block}
@@ -165,33 +165,10 @@ img{max-width:100%;display:block}
 .gar-txt{font-size:.93rem;color:rgba(196,168,216,.85);line-height:1.85;font-weight:500;margin-bottom:28px}
 .cta-urgencia{font-size:.72rem;color:rgba(196,168,216,.4);text-align:center;margin-top:11px;font-weight:600}
 
-/* STICKY */
-.sticky{position:fixed;bottom:0;left:0;right:0;background:var(--vd);padding:11px 16px;display:flex;align-items:center;justify-content:center;z-index:999;box-shadow:0 -3px 16px rgba(0,0,0,.2);transform:translateY(100%);transition:transform .3s ease}
-.sticky.visible{transform:translateY(0)}
-.sticky a{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem}
-
-/* TOAST */
-.sp-toast{position:fixed;bottom:74px;left:12px;width:230px;background:#2A1240;color:#fff;border-radius:13px;padding:10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,.3);z-index:1000;opacity:0;transform:translateY(14px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
-.sp-toast.show{opacity:1;transform:translateY(0)}
-.sp-icon{width:28px;height:28px;border-radius:50%;background:var(--roxo);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8rem;font-weight:900}
-.sp-text strong{font-weight:800;font-size:.82rem;display:block;line-height:1.2}
-.sp-text span{font-size:.72rem;opacity:.82;line-height:1.3;display:block}
-.sp-close{background:none;border:none;color:rgba(255,255,255,.45);font-size:.82rem;cursor:pointer;padding:0;flex-shrink:0;margin-left:auto;line-height:1}
-
 footer{background:#2A1240;color:rgba(196,168,216,.4);text-align:center;padding:18px;font-size:.68rem;line-height:1.9}
 </style>
 </head>
 <body>
-
-<!-- TOAST -->
-<div class="sp-toast" id="spToast">
-  <div class="sp-icon">✓</div>
-  <div class="sp-text">
-    <strong id="spName">Camila</strong>
-    <span>acabou de garantir o acesso</span>
-  </div>
-  <button class="sp-close" onclick="fecharToast()">✕</button>
-</div>
 
 <!-- ══════════════════════════════════
      BLOCO 1, DOR
@@ -459,44 +436,5 @@ footer{background:#2A1240;color:rgba(196,168,216,.4);text-align:center;padding:1
   </p>
 </footer>
 
-<div class="sticky" id="stickyBar">
-  <a href="#oferta">Quero essa clareza agora</a>
-</div>
-
-<script>
-var sticky=document.getElementById('stickyBar');
-var hero=document.querySelector('.sec-escura');
-function checkSticky(){
-  if(hero.getBoundingClientRect().bottom<0){sticky.classList.add('visible')}
-  else{sticky.classList.remove('visible')}
-}
-window.addEventListener('scroll',checkSticky,{passive:true});
-
-(function(){
-  var nomes=['Camila','Fernanda','Juliana','Renata','Mariana','Patrícia','Beatriz','Larissa','Gabriela','Tatiane','Luciana','Débora','Vanessa','Priscila','Simone','Adriana','Mônica','Letícia','Amanda','Bruna','Thais','Viviane','Raquel','Sandra','Carla','Fabiana','Jéssica','Carolina','Ana Paula','Cristiane'];
-  var toast=document.getElementById('spToast');
-  var spName=document.getElementById('spName');
-  var ativo=false,usados=[];
-  function proximoNome(){
-    if(usados.length>=nomes.length)usados=[];
-    var disp=nomes.filter(function(n){return usados.indexOf(n)===-1});
-    var n=disp[Math.floor(Math.random()*disp.length)];
-    usados.push(n);return n;
-  }
-  function mostrar(){
-    if(ativo)return;ativo=true;
-    spName.textContent=proximoNome();
-    toast.classList.add('show');
-    setTimeout(esconder,4000);
-  }
-  function esconder(){toast.classList.remove('show');ativo=false;}
-  window.fecharToast=esconder;
-  setTimeout(function(){
-    mostrar();
-    function prox(){var d=(Math.random()*5000)+15000;setTimeout(function(){mostrar();prox();},d);}
-    prox();
-  },6000);
-})();
-</script>
 </body>
 </html>
